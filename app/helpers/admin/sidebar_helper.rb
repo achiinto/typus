@@ -6,9 +6,9 @@ module Admin
       app_name = @resource.typus_application
 
       admin_user.application(app_name).sort {|a,b| a.typus_constantize.model_name.human <=> b.typus_constantize.model_name.human}.each do |resource|
-        if params[:hide] != 'true' then
-        	klass = resource.typus_constantize
-
+		klass = resource.typus_constantize
+		if klass.typus_options_for(:hide_from_sidebar) != true then
+        	
         	resources[resource] = default_actions(klass)
         	resources[resource] += custom_actions(klass)
 	        resources[resource] += export(klass) if params[:action] == 'index'
@@ -23,7 +23,7 @@ module Admin
     def default_actions(klass)
       Array.new.tap do |tap|
         tap << link_to_unless_current(Typus::I18n.t("Add new"), :action => "new") if admin_user.can?("create", klass)
-        tap << link_to_unless_current(Typus::I18n.t("List2"), :action => "index")
+        tap << link_to_unless_current(Typus::I18n.t("List"), :action => "index")
       end
     end
 
