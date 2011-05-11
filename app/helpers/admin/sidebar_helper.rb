@@ -6,13 +6,15 @@ module Admin
       app_name = @resource.typus_application
 
       admin_user.application(app_name).sort {|a,b| a.typus_constantize.model_name.human <=> b.typus_constantize.model_name.human}.each do |resource|
+        if params[:hide] == false then
         klass = resource.typus_constantize
 
-        resources[resource] = default_actions(klass)
-        resources[resource] += custom_actions(klass)
-        resources[resource] += export(klass) if params[:action] == 'index'
+        	resources[resource] = default_actions(klass)
+        	resources[resource] += custom_actions(klass)
+	        resources[resource] += export(klass) if params[:action] == 'index'
 
-        resources[resource].compact!
+        	resources[resource].compact!
+        end
       end
 
       render "admin/helpers/sidebar/sidebar", :resources => resources
