@@ -12,8 +12,9 @@
 
       <%
         klass = model.typus_constantize
-        klass_human_name = klass.model_name.human.pluralize
-        admin_items_path = { :controller => "/admin/#{klass.to_resource}" }
+        if klass.typus_options_for(:hide_from_dashboard) == true then
+            klass_human_name = klass.model_name.human.pluralize
+            admin_items_path = { :controller => "/admin/#{klass.to_resource}" }
       %>
 
       <tr class="<%= cycle("even", "odd") %>">
@@ -21,7 +22,8 @@
           <%= link_to klass_human_name, admin_items_path %>
         </td>
       </tr>
-
+	  
+	  <% end %>
     <% end %>
 
   </table>

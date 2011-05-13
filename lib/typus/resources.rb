@@ -24,6 +24,12 @@ module Typus
     mattr_accessor :form_rows
     @@form_rows = 15
 
+	mattr_accessor :hide_from_sidebar
+    @@hide_from_sidebar = false
+
+    mattr_accessor :hide_from_dashboard
+    @@hide_from_dashboard = false
+
     mattr_accessor :minute_step
     @@minute_step = 5
 

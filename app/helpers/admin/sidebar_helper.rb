@@ -7,12 +7,12 @@ module Admin
 
       admin_user.application(app_name).sort {|a,b| a.typus_constantize.model_name.human <=> b.typus_constantize.model_name.human}.each do |resource|
         klass = resource.typus_constantize
-
-        resources[resource] = default_actions(klass)
-        resources[resource] += custom_actions(klass)
-        resources[resource] += export(klass) if params[:action] == 'index'
-
-        resources[resource].compact!
+		if klass.typus_options_for(:hide_from_sidebar) != true then
+	        resources[resource] = default_actions(klass)
+	        resources[resource] += custom_actions(klass)
+	        resources[resource] += export(klass) if params[:action] == 'index'
+	        resources[resource].compact!
+	    end
       end
 
       render "admin/helpers/sidebar/sidebar", :resources => resources
